@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const CodeSnippetForm = () => {
-  // State variables to store form data
+  // State to store form data
   const [formData, setFormData] = useState({
     username: "",
     code_language: "",

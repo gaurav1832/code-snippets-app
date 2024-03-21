@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
@@ -10,10 +11,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "mysqlpassword",
-  database: "devtasks",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 // Endpoint to submit code snippet
@@ -35,10 +36,10 @@ app.post("/submit", (req, res) => {
   );
 });
 
-// Endpoint to retrieve all code snippets
+// End point for fetching code snippets
 app.get("/snippets", (req, res) => {
   const sql =
-    "SELECT username, code_language, stdin, source_code, timestamp FROM code_snippets";
+    "SELECT id, username, code_language, stdin, LEFT(source_code, 100) as source_code_preview, timestamp FROM code_snippets";
   connection.query(sql, (err, results) => {
     if (err) {
       console.error("Error retrieving code snippets:", err);

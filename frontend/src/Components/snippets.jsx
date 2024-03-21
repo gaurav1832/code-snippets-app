@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import SnippetCard from "./snippet-card";
 
-const AllSnippets = () => {
+const SnippetTable = () => {
   const [snippets, setSnippets] = useState([]);
 
+  // Fetching the code snippets
   useEffect(() => {
     const fetchSnippets = async () => {
       try {
@@ -17,22 +17,69 @@ const AllSnippets = () => {
     fetchSnippets();
   }, []);
 
+  // Function to format timestamp
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString();
+  };
+
   console.log(snippets);
 
   return (
     <>
-      <h1 className="flex justify-center p-8 font-semibold text-2xl">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4 px-20 py-8">
         Submitted Code Snippets
-      </h1>
-      <div className="container mx-auto flex flex-wrap justify-normal">
-        {snippets.map((snippet) => (
-          <div key={snippet.id} className="m-4">
-            <SnippetCard snippet={snippet} />
+      </h2>
+      <div className="container shadow-lg mx-auto">
+        <div className="overflow-x-auto">
+          <div className="min-w-full">
+            <table className="table-auto w-full">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-800 uppercase tracking-wider">
+                    Username
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-800 uppercase tracking-wider">
+                    Code Language
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-800 uppercase tracking-wider">
+                    Stdin
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-800 uppercase tracking-wider">
+                    Source Code Preview
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-800 uppercase tracking-wider">
+                    Timestamp
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {snippets.map((snippet, index) => (
+                  <tr key={index}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {snippet.username}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {snippet.code_language}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {snippet.stdin}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {snippet.source_code_preview}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {formatTimestamp(snippet.timestamp)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        ))}
+        </div>
       </div>
     </>
   );
 };
 
-export default AllSnippets;
+export default SnippetTable;
