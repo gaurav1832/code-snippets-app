@@ -5,7 +5,7 @@ const Landing = (props) => (
   <div className="flex flex-col space-y-8 min-h-[760px] items-center justify-center overflow-hidden">
     <h2 className="text-3xl font-semibold text-gray-700 pt-6 px-8">
       Submit your code sippets{" "}
-      <span className="font-bold text-red-500 italic">#hasslefree</span>
+      <span className="font-bold text-red-500 italic">#hassle-free</span>
     </h2>
     <Link
       to={"/submit"}
